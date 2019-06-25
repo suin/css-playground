@@ -1,0 +1,38 @@
+<meta charset="UTF-8">
+<title>CSS Shadow Parts</title>
+<link href="hoge.css" rel="stylesheet">
+<style>
+    h3 {
+        color: blue;
+    }
+
+    my-h3::part(title) {
+        color: green;
+    }
+</style>
+
+<script src=""></script>
+
+<script>
+class MyH3 extends HTMLElement {
+    constructor() {
+        super()
+        const node = this.attachShadow({mode: 'open'})
+        node.innerHTML = `<h3 part="title"><slot/></h3>`
+    }
+}
+
+class MyH3NoPart extends HTMLElement {
+    constructor() {
+        super()
+        const node = this.attachShadow({mode: 'open'})
+        node.innerHTML = `<h3><slot/></h3>`
+    }
+}
+customElements.define('my-h3', MyH3)
+customElements.define('my-h3-no-part', MyH3NoPart)
+</script>
+
+<h3>ホスト側の見出し3</h3>
+<my-h3>シャドーDOM内の見出し3</my-h3>
+<my-h3-no-part>シャドーDOM内の見出し3(partなし)</my-h3-no-part>
